@@ -16,10 +16,11 @@ const Home = ({ categoriesList }) => {
         setItems(arr);
         setIsLoading(false);
       });
+    window.scrollTo(0, 0);
   }, []);
 
   return (
-    <>
+    <div className='container'>
       <div className='content__top'>
         <Categories pizzaList={categoriesList} />
         <Sort />
@@ -39,7 +40,7 @@ const Home = ({ categoriesList }) => {
               />
             ))}
       </div>
-    </>
+    </div>
   );
 };
 export default Home;
