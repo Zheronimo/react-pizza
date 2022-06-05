@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function Categories({ pizzaList }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const itemList = pizzaList.map((item, index) => (
+function Categories({ value, pizzaList, onChangeCategory }) {
+  const itemList = pizzaList.map((categoryName, index) => (
     <li
       key={index}
-      className={activeIndex === index ? 'active' : null}
+      className={value === index ? 'active' : null}
       onClick={() => {
-        setActiveIndex(index);
+        onChangeCategory(index);
       }}>
-      {item}
+      {categoryName}
     </li>
   ));
 

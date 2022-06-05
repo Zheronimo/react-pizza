@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 
-function Sort() {
+function Sort({ value, onChangeSort }) {
   const [isVisiblePopap, setIsVisiblePopap] = useState(false);
-  const [selectedSort, setSelectedSort] = useState(0);
-  const listSort = ['популярности', 'цене', 'алфавиту'];
+  const listSort = [
+    { name: 'популярности', sortProperty: 'rating' },
+    { name: 'цене', sortProperty: 'price' },
+    { name: 'алфавиту', sortProperty: 'title' },
+  ];
 
   const hendleListSelect = (index) => {
-    setSelectedSort(index);
+    onChangeSort(index);
     setIsVisiblePopap(false);
   };
 
@@ -26,17 +29,17 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisiblePopap(!isVisiblePopap)}>{listSort[selectedSort]}</span>
+        <span onClick={() => setIsVisiblePopap(!isVisiblePopap)}>{value.name}</span>
       </div>
       {isVisiblePopap && (
         <div className='sort__popup'>
           <ul>
-            {listSort.map((name, index) => (
+            {listSort.map((obj) => (
               <li
-                key={name}
-                className={selectedSort === index ? 'active' : null}
-                onClick={() => hendleListSelect(index)}>
-                {name}
+                key={obj.name}
+                className={value.sortProperty === obj.sortProperty ? 'active' : null}
+                onClick={() => hendleListSelect(obj)}>
+                {obj.name}
               </li>
             ))}
           </ul>
