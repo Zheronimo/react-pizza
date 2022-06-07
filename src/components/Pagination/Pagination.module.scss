@@ -1,0 +1,33 @@
+.Pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  li {
+    display: inline-block;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fe5f1e;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #fe5f1e;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+    &:hover {
+      background-color: #fe5f1e;
+      color: #fff;
+    }
+  }
+  :global {
+    .selected {
+      a {
+        background-color: #fe5f1e;
+        color: #fff;
+      }
+    }
+  }
+}

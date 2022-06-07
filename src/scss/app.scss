@@ -26,9 +26,11 @@ body {
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    // grid-template-rows: repeat(2, 1fr);
     gap: 65px 20px;
     justify-items: center;
+    margin-bottom: 50px;
     @media (max-width: 1400px) {
       grid-template-columns: repeat(3, 1fr);
     }
