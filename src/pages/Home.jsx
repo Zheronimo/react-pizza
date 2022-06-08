@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -7,18 +9,20 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
 const Home = ({ categoriesList, searchValue }) => {
+  const categoryId = useSelector((state) => state.filter.categoryId);
+  const sort = useSelector((state) => state.filter.sort);
+  const dispatch = useDispatch();
+
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState({ name: 'популярности', sortProperty: 'rating' });
 
   useEffect(() => {
     setIsLoading(true);
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
     fetch(
-      `https://6293dd43089f87a57ac6edcf.mockapi.io/item?page=${currentPage}&limit=4${category}&sortBy=${sortType.sortProperty}&order=asc${search}`,
+      `https://6293dd43089f87a57ac6edcf.mockapi.io/item?page=${currentPage}&limit=4${category}&sortBy=${sort.sortProperty}&order=asc${search}`,
     )
       .then((res) => res.json())
       .then((arr) => {
@@ -26,7 +30,7 @@ const Home = ({ categoriesList, searchValue }) => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
+  }, [categoryId, sort, searchValue, currentPage]);
 
   return (
     <div className='container'>
@@ -34,9 +38,9 @@ const Home = ({ categoriesList, searchValue }) => {
         <Categories
           value={categoryId}
           pizzaList={categoriesList}
-          onChangeCategory={(id) => setCategoryId(id)}
+          onChangeCategory={(id) => dispatch(setCategoryId(id))}
         />
-        <Sort value={sortType} onChangeSort={(id) => setSortType(id)} />
+        <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>

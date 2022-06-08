@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
 
-function Sort({ value, onChangeSort }) {
+function Sort() {
+  const sort = useSelector((state) => state.filter.sort);
+  const dispatch = useDispatch();
   const [isVisiblePopap, setIsVisiblePopap] = useState(false);
   const listSort = [
     { name: 'популярности', sortProperty: 'rating' },
@@ -8,8 +12,8 @@ function Sort({ value, onChangeSort }) {
     { name: 'алфавиту', sortProperty: 'title' },
   ];
 
-  const hendleListSelect = (index) => {
-    onChangeSort(index);
+  const hendleListSelect = (obj) => {
+    dispatch(setSort(obj));
     setIsVisiblePopap(false);
   };
 
@@ -29,7 +33,7 @@ function Sort({ value, onChangeSort }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisiblePopap(!isVisiblePopap)}>{value.name}</span>
+        <span onClick={() => setIsVisiblePopap(!isVisiblePopap)}>{sort.name}</span>
       </div>
       {isVisiblePopap && (
         <div className='sort__popup'>
@@ -37,7 +41,7 @@ function Sort({ value, onChangeSort }) {
             {listSort.map((obj) => (
               <li
                 key={obj.name}
-                className={value.sortProperty === obj.sortProperty ? 'active' : null}
+                className={sort.sortProperty === obj.sortProperty ? 'active' : null}
                 onClick={() => hendleListSelect(obj)}>
                 {obj.name}
               </li>
